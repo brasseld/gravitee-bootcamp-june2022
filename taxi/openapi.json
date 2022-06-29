@@ -1,0 +1,384 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "A synchronous API to manage taxi bookings",
+    "title": "Taxi Bookings",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://bootcamp-gateway.cloud.gravitee.io/taxi"
+    }
+  ],
+  "tags": [],
+  "paths": {
+    "/booking": {
+      "post": {
+        "summary": "Create a new instance of Booking",
+        "tags": [
+          "Booking"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "Booking content",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Booking"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The resource has been created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Booking"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          },
+          "504": {
+            "$ref": "#/components/responses/504"
+          }
+        }
+      }
+    },
+    "/booking/{id}": {
+      "get": {
+        "summary": "Retrieve the specified instance of Booking by id",
+        "tags": [
+          "Booking"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "id of the Booking",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Booking"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          },
+          "504": {
+            "$ref": "#/components/responses/504"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete the specified instance of Booking by id",
+        "tags": [
+          "Booking"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "id of the Booking",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The resource has been removed"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          },
+          "504": {
+            "$ref": "#/components/responses/504"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update the specified instance of Booking by id",
+        "tags": [
+          "Booking"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "id of the Booking",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Booking content",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Booking"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Booking"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          },
+          "504": {
+            "$ref": "#/components/responses/504"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Booking": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": ""
+          },
+          "driverName": {
+            "type": "string",
+            "description": "The name of the driver for this booking",
+            "example": "Robert DeNiro"
+          },
+          "destinations": {
+            "type": "object",
+            "properties": {
+              "longitude": {
+                "type": "number",
+                "description": "",
+                "example": "38.8951"
+              },
+              "latitude": {
+                "type": "number",
+                "description": "",
+                "example": "-77.0364"
+              },
+              "order": {
+                "type": "integer",
+                "description": "The order of which destination should be dropped off at first",
+                "example": "1"
+              }
+            }
+          },
+          "customerName": {
+            "type": "string",
+            "description": "The name of the customer for this booking",
+            "example": "Mario"
+          },
+          "completed": {
+            "type": "boolean",
+            "description": "Whether this booking has been completed or not",
+            "example": "false",
+            "readOnly": true
+          }
+        }
+      }
+    },
+    "responses": {
+      "400": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string",
+                  "enum": [
+                    "BAD_REQUEST"
+                  ]
+                },
+                "errorDescription": {
+                  "type": "string",
+                  "example": "Bad request in body/params/headers"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string",
+                  "enum": [
+                    "UNAUTHORIZED"
+                  ]
+                },
+                "errorDescription": {
+                  "type": "string",
+                  "example": "Authentication error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "Forbidden",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string",
+                  "enum": [
+                    "FORBIDDEN"
+                  ]
+                },
+                "errorDescription": {
+                  "type": "string",
+                  "example": "You cannot access this resource"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string",
+                  "enum": [
+                    "RESOURCE_NOT_FOUND"
+                  ]
+                },
+                "errorDescription": {
+                  "type": "string",
+                  "example": "The resource with id XX cannot be found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string",
+                  "enum": [
+                    "UNEXPECTED_SERVER_ERROR"
+                  ]
+                },
+                "errorDescription": {
+                  "type": "string",
+                  "example": "The server encountered an error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "504": {
+        "description": "Gateway Timeout",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string",
+                  "enum": [
+                    "REQUEST_TIMEOUT"
+                  ]
+                },
+                "errorDescription": {
+                  "type": "string",
+                  "example": "The server encountered a timeout"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

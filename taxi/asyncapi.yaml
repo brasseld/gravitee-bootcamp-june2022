@@ -1,0 +1,59 @@
+asyncapi: 2.1.0
+info:
+  title: Taxi Bookings
+  version: 1.0.0
+  description: An asynchronous API to manage taxi bookings
+servers:
+  private:
+    url: wss://bootcamp-gateway.cloud.gravitee.io/taxi/taxi
+    protocol: wss
+    description: |
+      Gravitee.io Gateway Websocket proxy
+channels:
+  taxi/booked:
+    publish:
+      summary: "A booking was made"
+      description: "The customer has made a new taxi booking"
+      message:
+        $ref: '#/components/messages/TripBooked'
+    subscribe:
+      summary: "A booking was received"
+      description: "The driver has subscribed to bookings"
+      message:
+        $ref: '#/components/messages/TripBooked'
+
+components:
+  messages:
+    TripBooked:
+      payload:
+        type: object
+        properties:
+          id:
+            type: string
+          driverName:
+            type: string
+            description: The name of the driver for this booking
+            example: Robert DeNiro
+          destinations:
+            type: array
+            items:
+                type: object
+                properties:
+                  longitude:
+                    type: number
+                    example: 38.8951
+                  latitude:
+                    type: number
+                    example: -77.0364
+                  order:
+                    type: integer
+                    example: 1
+                    description: The order of which destination should be dropped off at first
+          customerName:
+            type: string
+            example: Mario
+            description: The name of the customer for this booking
+          completed:
+            type: boolean
+            example: false
+            readOnly: true
